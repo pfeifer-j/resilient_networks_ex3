@@ -1,4 +1,4 @@
-# Resilient Networks: Network Design with IBM ILOG CPLEX Optimization Studio: Exercise Sheet 3
+# Resilient Networks: Exercise Sheet 3
 
 ## Instructors
 - Prof. Dr. Mathias Fischer
