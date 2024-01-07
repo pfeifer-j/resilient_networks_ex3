@@ -1,0 +1,118 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See https://apps.db.ripe.net/docs/HTML-Terms-And-Conditions
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to 'AS64396 - AS64495'
+
+as-block:       AS64396 - AS64495
+descr:          RIPE NCC ASN block
+remarks:        These AS Numbers are assigned to network operators in the RIPE NCC service region.
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2018-11-22T15:27:35Z
+last-modified:  2018-11-22T15:27:35Z
+source:         RIPE
+
+% Information related to 'AS64475'
+
+% Abuse contact for 'AS64475' is 'abuse@ffm.freifunk.net'
+
+aut-num:        AS64475
+as-name:        FREIFUNK-FRANKFURT
+org:            ORG-FFE1-RIPE
+remarks:
+remarks:        as-set: AS-FFFFM
+remarks:
+remarks:        --------------------------------------------
+remarks:        ----------------- Upstream -----------------
+remarks:        --------------------------------------------
+remarks:        --- Aixit GmbH
+import:         from AS29551 accept ANY
+export:         to AS29551 announce AS-FFFFM
+remarks:
+remarks:        --------------------------------------------
+remarks:        ---------------- Downstream ----------------
+remarks:        --------------------------------------------
+remarks:        --- Freifunk Stuttgart
+import:         from AS208772 accept AS208772
+export:         to AS208772 announce ANY
+remarks:
+admin-c:        FFE2-RIPE
+admin-c:        MF16389-RIPE
+admin-c:        IS6834-RIPE
+tech-c:         FFE2-RIPE
+tech-c:         MF16389-RIPE
+tech-c:         IS6834-RIPE
+tech-c:         MG27302-RIPE
+status:         ASSIGNED
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         FFFFM-MNT
+created:        2016-08-11T08:12:04Z
+last-modified:  2023-04-22T14:33:17Z
+source:         RIPE
+sponsoring-org: ORG-MF148-RIPE
+
+organisation:   ORG-FFE1-RIPE
+org-name:       Freifunk Frankfurt am Main e.V.
+country:        DE
+org-type:       OTHER
+address:        Postfach 160214, 60065 Frankfurt am Main, Germany
+abuse-c:        AR37643-RIPE
+mnt-ref:        FFFFM-MNT
+mnt-ref:        TraSec-MNT
+mnt-by:         FFFFM-MNT
+created:        2016-04-05T21:41:24Z
+last-modified:  2022-12-01T17:12:10Z
+source:         RIPE # Filtered
+
+person:         Freifunk Frankfurt am Main e.V.
+org:            ORG-FFE1-RIPE
+address:        Postfach 160214, 60065 Frankfurt am Main, Germany
+phone:          +49 151 70854230
+nic-hdl:        FFE2-RIPE
+mnt-by:         FFFFM-MNT
+created:        2016-04-05T13:25:06Z
+last-modified:  2019-06-02T11:37:20Z
+source:         RIPE # Filtered
+
+person:         Igor Scheller
+address:        Am Lindenbaum 7
+address:        61184 Karben
+address:        Germany
+phone:          +4915773159404
+nic-hdl:        IS6834-RIPE
+mnt-by:         MyIgel-MNT
+created:        2017-09-16T16:31:45Z
+last-modified:  2017-09-16T16:46:05Z
+source:         RIPE
+
+person:         Magnus Fruehling
+address:        Obere Roemerhofstrasse 144
+address:        61381 Friedrichsdorf
+address:        Germany
+phone:          +49 151 70 85 42 30
+nic-hdl:        MF16389-RIPE
+mnt-by:         mnt-skorpy
+created:        2016-05-25T17:10:57Z
+last-modified:  2022-07-01T10:10:38Z
+source:         RIPE # Filtered
+
+person:         Marvin Gaube
+address:        Brunnenhausstraße 6
+address:        76227 Karlsruhe
+address:        Germany
+phone:          +4961929739925
+org:            ORG-MA1710-RIPE
+nic-hdl:        MG27302-RIPE
+mnt-by:         MARGAU-MNT
+created:        2020-05-12T16:51:49Z
+last-modified:  2022-08-02T16:33:12Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.109.1 (SHETLAND)
+
+
