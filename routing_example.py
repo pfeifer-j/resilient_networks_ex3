@@ -48,6 +48,11 @@ def get_routing_table_entries(f, asn):
 
 def main(f):
     routes_count = 0
+    avg_path_len = 0
+    biggest_prefix = 32
+    asns_set = set()
+    prefix_origin = set()
+    transit_ases = set()
 
     # Iterate the routing table entries of a specific AS
     for prefix, route_path in get_routing_table_entries(f, ASN_TO_FILTER):
@@ -56,15 +61,51 @@ def main(f):
         if not isinstance(ip_prefix, ipaddress.IPv4Network):
             continue
 
-        # Just print it for demonstration purposes
-        print('%s -> %s' % (prefix, route_path))
-
         # ------------------------------- #
         # PUT YOUR CUSTOM ANALYSIS HERE...
-        routes_count += 1
+        # 1.2
+        # routes_count += 1
+
+        # 2.1
+        # if(len(route_path) == 0):
+        #    print('%s -> %s' % (prefix, route_path))
+
+        # 2.2.1
+        # if(len(route_path) != 0):
+        #    routes_count += 1
+        #    avg_path_len = avg_path_len + len(route_path) 
+
+        # 2.2.2
+        # if(len(route_path) != 0):
+        #    current_prefix = eval(prefix.split("/")[1])
+
+        #    if(biggest_prefix > current_prefix):
+        #        biggest_prefix = current_prefix
+
+        # 2.2.4
+        # if(len(route_path) != 0):
+        #    asns_set.update(route_path)
+
+        # 2.2.5
+        if(len(route_path) != 0):
+            prefix_origin.update(route_path[-1])
+            transit_ases.update(route_path[:-1])
+
 
     # Report analysis results
-    print("Number of routes: {:d}".format(routes_count))
+    #print("Number of routes: {:d}".format(routes_count))
+    #print("Avg path length: {:.2f}".format(avg_path_len/routes_count))
+    #print("Largest prefix: {:d}".format(biggest_prefix))
+    #print("Unique ASNs among all routes: {}".format(len(asns_set)))
+    print("Number of prefix origins: {}".format(len(prefix_origin)))
+    print("Number of transit ASes: {}".format(len(transit_ases)))
+    print("Number of pure transit ASes: {}".format(len(transit_ases - prefix_origin)))
+
+
+
+    
+
+
 
 
 if __name__ == '__main__':
