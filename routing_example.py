@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import argparse
+from collections import defaultdict
 from pathlib import Path
 from bgpdumpy import BGPDump, TableDumpV2
 import ipaddress
@@ -42,7 +43,7 @@ def get_routing_table_entries(f, asn):
 
     # Save for next run
     with open(export_file, 'w') as jf:
-        #print("Writing cache for ASN {:d} to '{!s}'".format(asn, export_file))
+        # print("Writing cache for ASN {:d} to '{!s}'".format(asn, export_file))
         json.dump(routes, jf)
 
 
@@ -50,6 +51,9 @@ def main(f):
     routes_count = 0
     avg_path_len = 0
     biggest_prefix = 32
+    asses_occurrences = defaultdict(int)
+    directly_connected_asses = 0
+    origin_as_for_networks = defaultdict(list)
     asns_set = set()
     prefix_origin = set()
     transit_ases = set()
@@ -87,25 +91,51 @@ def main(f):
         #    asns_set.update(route_path)
 
         # 2.2.5
-        if(len(route_path) != 0):
+        if (len(route_path) != 0):
             prefix_origin.update(route_path[-1])
             transit_ases.update(route_path[:-1])
 
+        # 3.1
+        if (len(route_path) == 1):
+            directly_connected_asses += 1
+        # 3.2
+        if (len(route_path) > 0):
+            for key in route_path:
+                asses_occurrences[key] += 1
+
+        # 3.3
+        if len(route_path) > 0:
+            if route_path[-1] in origin_as_for_networks:
+                try:
+                    examined_network = ipaddress.IPv4Network(prefix)
+                except ValueError:
+                    examined_network = ipaddress.IPv6Network(prefix)
+                for network in origin_as_for_networks[route_path[-1]]:
+                    try:
+                        converted_network = ipaddress.IPv4Network(network)
+                    except ValueError:
+                        converted_network = ipaddress.IPv6Network(network)
+                    if examined_network.supernet_of(converted_network):
+                        origin_as_for_networks[route_path[-1]].remove(network)
+                        origin_as_for_networks[route_path[-1]].append(examined_network)
+            else:
+                origin_as_for_networks[route_path[-1]].append(prefix)
+
+        # 3.4
 
     # Report analysis results
-    #print("Number of routes: {:d}".format(routes_count))
-    #print("Avg path length: {:.2f}".format(avg_path_len/routes_count))
-    #print("Largest prefix: {:d}".format(biggest_prefix))
-    #print("Unique ASNs among all routes: {}".format(len(asns_set)))
+    # print("Number of routes: {:d}".format(routes_count))
+    # print("Avg path length: {:.2f}".format(avg_path_len/routes_count))
+    # print("Largest prefix: {:d}".format(biggest_prefix))
+    # print("Unique ASNs among all routes: {}".format(len(asns_set)))
     print("Number of prefix origins: {}".format(len(prefix_origin)))
     print("Number of transit ASes: {}".format(len(transit_ases)))
     print("Number of pure transit ASes: {}".format(len(transit_ases - prefix_origin)))
-
-
-
-    
-
-
+    print("Number of directly connected ASes: {}".format(directly_connected_asses))
+    most_frequent_as = max(asses_occurrences, key=asses_occurrences.get)
+    print("AS {} occurs {} times, and is the most critical AS in terms of frequency".format(most_frequent_as,
+                                                                                            asses_occurrences[
+                                                                                                most_frequent_as]))
 
 
 if __name__ == '__main__':
