@@ -110,14 +110,21 @@ def main(f):
                     examined_network = ipaddress.IPv4Network(prefix)
                 except ValueError:
                     examined_network = ipaddress.IPv6Network(prefix)
-                for network in origin_as_for_networks[route_path[-1]]:
+                networks = origin_as_for_networks[route_path[-1]]
+                for network in networks:
                     try:
                         converted_network = ipaddress.IPv4Network(network)
                     except ValueError:
                         converted_network = ipaddress.IPv6Network(network)
+                    if prefix in origin_as_for_networks[route_path[-1]]:
+                        print("Network {} is already in the list".format(network))
+                        break
                     if examined_network.supernet_of(converted_network):
                         origin_as_for_networks[route_path[-1]].remove(network)
-                        origin_as_for_networks[route_path[-1]].append(examined_network)
+                        origin_as_for_networks[route_path[-1]].append(prefix)
+                    elif not examined_network.subnet_of(converted_network):
+                        origin_as_for_networks[route_path[-1]].append(prefix)
+
             else:
                 origin_as_for_networks[route_path[-1]].append(prefix)
 
